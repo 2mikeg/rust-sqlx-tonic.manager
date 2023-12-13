@@ -1,7 +1,9 @@
 use cas::cas_server::{Cas, CasServer};
 use cas::{EsSetlement, EsSettlementCreate, EsSettlementGet};
+use sqlx::postgres::PgPoolOptions;
 use tonic::{transport::Server, Request, Response, Status};
 
+mod conf;
 pub mod cas {
     tonic::include_proto!("cas");
 }
@@ -47,8 +49,26 @@ impl Cas for NewCas {
     }
 }
 
+fn get_conn_string(conf: conf::Conf) -> String {
+    let conn_string = format!(
+        "postgres://{}:{}@{}/{}",
+        conf.db_user, conf.db_password, conf.db_host, conf.db_name
+    );
+
+    conn_string
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let conf = conf::load_env();
+
+    let conn_string = get_conn_string(conf);
+
+    let pg_pool = PgPoolOptions::new()
+        .max_connections(1)
+        .connect(&conn_string)
+        .await?;
+
     let addr = "[::1]:50051".parse().unwrap();
     let cas: NewCas = NewCas::default();
 
