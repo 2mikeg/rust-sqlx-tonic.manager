@@ -1,6 +1,7 @@
 use cas::cas_server::{Cas, CasServer};
 use cas::{EsSetlement, EsSettlementCreate, EsSettlementGet};
-use sqlx::postgres::PgPoolOptions;
+use sqlx::postgres::{PgPool, PgPoolOptions};
+use sqlx::{Pool, Postgres};
 use tonic::{transport::Server, Request, Response, Status};
 
 mod conf;
@@ -8,8 +9,16 @@ pub mod cas {
     tonic::include_proto!("cas");
 }
 
-#[derive(Debug, Default)]
-pub struct NewCas {}
+#[derive(Debug)]
+pub struct NewCas {
+    pg_pool: PgPool,
+}
+
+impl NewCas {
+    pub fn new(pg_pool: PgPool) -> Self {
+        Self { pg_pool: pg_pool }
+    }
+}
 
 #[tonic::async_trait]
 impl Cas for NewCas {
@@ -70,7 +79,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     let addr = "[::1]:50051".parse().unwrap();
-    let cas: NewCas = NewCas::default();
+    let cas: NewCas = NewCas::new(pg_pool);
 
     Server::builder()
         .add_service(CasServer::new(cas))
