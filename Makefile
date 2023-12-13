@@ -1,0 +1,2 @@
+build_proto:
+	cmd
