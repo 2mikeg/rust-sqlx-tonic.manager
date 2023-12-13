@@ -1,21 +1,20 @@
 syntax="proto3";
 package cas;
 
-message ESSetlementBase {
+message ESSettlementCreate {
     string service_id = 1;
     float quantity = 2;
     float price = 3;
     float amount = 4;
 }
 
-message ESSettlementCreate {
-    ESSetlementBase settlement = 1;
-}
-
 message ESSetlement {
     string id = 1;
-    ESSetlementBase settlement = 2;
-    string created_at = 3;
+    string service_id = 2;
+    float quantity = 3;
+    float price = 4;
+    float amount = 5;
+    string created_at = 6;
 }
 
 message ESSettlementGet {
