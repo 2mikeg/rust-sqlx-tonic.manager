@@ -2,7 +2,7 @@ use chrono::{NaiveDateTime};
 use sqlx;
 
 #[derive(Debug, sqlx::FromRow)]
-pub struct DbEsSettlement {
+pub struct DbSettlement {
     pub id: String,
     pub service_id: String,
     pub created_at: Option<NaiveDateTime>,

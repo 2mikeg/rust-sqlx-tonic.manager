@@ -3,14 +3,14 @@ package cas;
 
 import "google/protobuf/timestamp.proto";
 
-message ESSettlementCreate {
+message SettlementCreate {
     string service_id = 1;
     double quantity = 2;
     double price = 3;
     double amount = 4;
 }
 
-message ESSettlement {
+message Settlement {
     string id = 1;
     string service_id = 2;
     double quantity = 3;
@@ -19,11 +19,11 @@ message ESSettlement {
     google.protobuf.Timestamp created_at = 6;
 }
 
-message ESSettlementGet {
+message SettlementGet {
     string id = 1;
 }
 
 service CAS {
-    rpc Create(ESSettlementCreate) returns (ESSettlement) {};
-    rpc Get(ESSettlementGet) returns (ESSettlement) {};
+    rpc Create(SettlementCreate) returns (Settlement) {};
+    rpc Get(SettlementGet) returns (Settlement) {};
 }
