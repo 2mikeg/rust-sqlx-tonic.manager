@@ -1,20 +1,22 @@
 syntax="proto3";
 package cas;
 
+import "google/protobuf/timestamp.proto";
+
 message ESSettlementCreate {
     string service_id = 1;
-    float quantity = 2;
-    float price = 3;
-    float amount = 4;
+    double quantity = 2;
+    double price = 3;
+    double amount = 4;
 }
 
 message ESSetlement {
     string id = 1;
     string service_id = 2;
-    float quantity = 3;
-    float price = 4;
-    float amount = 5;
-    string created_at = 6;
+    double quantity = 3;
+    double price = 4;
+    double amount = 5;
+    google.protobuf.Timestamp created_at = 6;
 }
 
 message ESSettlementGet {

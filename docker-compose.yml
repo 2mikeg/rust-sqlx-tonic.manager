@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "3214"
+      POSTGRES_USER: "mikeuser"
+    ports:
+      - '5432:5432'
+    volumes:
+    - db:/Users/mike/Documents/rust/grpc_manager
+
+volumes:
+  db:
+    driver: local
