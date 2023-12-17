@@ -10,7 +10,7 @@ message ESSettlementCreate {
     double amount = 4;
 }
 
-message ESSetlement {
+message ESSettlement {
     string id = 1;
     string service_id = 2;
     double quantity = 3;
@@ -24,6 +24,6 @@ message ESSettlementGet {
 }
 
 service CAS {
-    rpc Create(ESSettlementCreate) returns (ESSetlement) {};
-    rpc Get(ESSettlementGet) returns (ESSetlement) {};
+    rpc Create(ESSettlementCreate) returns (ESSettlement) {};
+    rpc Get(ESSettlementGet) returns (ESSettlement) {};
 }
