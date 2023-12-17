@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "cas.CAS.Create"
+  },
+  "requests": [
+    {
+      "location": "Create-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "0f01f165-8bd8-4a7d-9fcf-7c5e758fcc08"
+}

@@ -8,5 +8,5 @@ CREATE TABLE settlements (
         quantity float8 NOT NULL,
         price float8 NOT NULL,
         amount float8 NOT NULL,
-        created_at TIMESTAMPTZ NOT NULL default CURRENT_TIMESTAMP
+        created_at TIMESTAMP NOT NULL default CURRENT_TIMESTAMP
     )

@@ -1,0 +1,6 @@
+{
+  "serviceId": "{{ faker.random.uuid }}",
+  "quantity": 694.2681201273938,
+  "price": 611.2064761179406,
+  "amount": 768.6636076880922
+}

@@ -5,6 +5,8 @@ use cas::cas_server::CasServer;
 
 mod conf;
 mod handler;
+mod model;
+mod utils;
 
 pub mod cas {
     tonic::include_proto!("cas");
