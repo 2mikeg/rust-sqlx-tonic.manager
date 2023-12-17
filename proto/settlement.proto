@@ -1,5 +1,5 @@
 syntax="proto3";
-package cas;
+package settlement_manager;
 
 import "google/protobuf/timestamp.proto";
 
@@ -23,7 +23,7 @@ message SettlementGet {
     string id = 1;
 }
 
-service CAS {
+service SettlementCrud {
     rpc Create(SettlementCreate) returns (Settlement) {};
     rpc Get(SettlementGet) returns (Settlement) {};
 }

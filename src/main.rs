@@ -1,15 +1,15 @@
 use sqlx::postgres::{PgPoolOptions};
 use tonic::{transport::Server};
 use dotenv::dotenv;
-use cas::cas_server::CasServer;
+use settlement_manager::settlement_crud_server::SettlementCrudServer;
 
 mod conf;
 mod handler;
 mod model;
 mod utils;
 
-pub mod cas {
-    tonic::include_proto!("cas");
+pub mod settlement_manager {
+    tonic::include_proto!("settlement_manager");
 }
 
 
@@ -35,10 +35,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     let addr = "[::1]:50051".parse().unwrap();
-    let cas= handler::cas::NewCas::new(pg_pool);
+    let cas= handler::settlement_manager::NewCas::new(pg_pool);
 
     Server::builder()
-        .add_service(CasServer::new(cas))
+        .add_service(SettlementCrudServer::new(cas))
         .serve(addr)
         .await?;
 

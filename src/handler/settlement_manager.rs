@@ -1,13 +1,13 @@
-use crate::cas::cas_server::{Cas};
-use crate::cas::{Settlement, SettlementCreate, SettlementGet};
+use crate::settlement_manager::settlement_crud_server::{SettlementCrud};
+use crate::settlement_manager::{Settlement, SettlementCreate, SettlementGet};
 use sqlx::postgres::{PgPool};
 use tonic::{Request, Response, Status};
 use uuid::Uuid;
 use crate::model;
 use crate::utils::{native_dt_to_timestamp};
 
-pub mod cas {
-	tonic::include_proto!("cas");
+pub mod settlement_manager {
+	tonic::include_proto!("settlement_manager");
 }
 
 
@@ -24,7 +24,7 @@ impl NewCas {
 
 
 #[tonic::async_trait]
-impl Cas for NewCas {
+impl SettlementCrud for NewCas {
 	async fn create(
 		&self,
 		request: Request<SettlementCreate>,
@@ -33,7 +33,7 @@ impl Cas for NewCas {
 
 
 		let insert_settlement_query = sqlx::query_as!(
-			model::cas::DbSettlement,
+			model::settlement_manager::DbSettlement,
 			"INSERT INTO settlements (service_id, quantity, price, amount) VALUES ($1, $2, $3, $4) RETURNING id, service_id, quantity, price, amount, created_at;",
 			Uuid::parse_str(&req.service_id).unwrap(),
 			req.quantity,
@@ -69,7 +69,7 @@ impl Cas for NewCas {
 		let req = request.into_inner();
 
 		let get_settlement_query = sqlx::query_as!(
-			model::cas::DbSettlement,
+			model::settlement_manager::DbSettlement,
 			"SELECT * FROM settlements WHERE id=($1);",
 			Uuid::parse_str(&req.id).unwrap()
 		).fetch_one(&self.pg_pool).await;
