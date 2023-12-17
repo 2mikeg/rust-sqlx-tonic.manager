@@ -27,11 +27,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     let conf = conf::load_env();
 
+
     let conn_string = get_conn_string(conf);
 
     let pg_pool = PgPoolOptions::new()
         .max_connections(1)
         .connect(&conn_string)
+        .await?;
+
+    sqlx::migrate!()
+        .run(&pg_pool)
         .await?;
 
     let addr = "[::1]:50051".parse().unwrap();
