@@ -1,0 +1,29 @@
+syntax="proto3";
+package settlement_manager;
+
+import "google/protobuf/timestamp.proto";
+
+message SettlementCreate {
+    string service_id = 1;
+    double quantity = 2;
+    double price = 3;
+    double amount = 4;
+}
+
+message Settlement {
+    string id = 1;
+    string service_id = 2;
+    double quantity = 3;
+    double price = 4;
+    double amount = 5;
+    google.protobuf.Timestamp created_at = 6;
+}
+
+message SettlementGet {
+    string id = 1;
+}
+
+service SettlementCrud {
+    rpc Create(SettlementCreate) returns (Settlement) {};
+    rpc Get(SettlementGet) returns (Settlement) {};
+}
