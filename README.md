@@ -25,6 +25,9 @@ cargo run
 cargo install protoc-gen-prost protoc-gen-prost-serde protoc-gen-tonic protoc-gen-prost-crate
 ```
 
+## ToDOs:
+- Implement timezone for migrations and settlement transport (created_at field)
+
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 
