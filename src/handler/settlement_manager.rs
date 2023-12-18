@@ -12,11 +12,11 @@ pub mod settlement_manager {
 
 
 #[derive(Debug)]
-pub struct NewCas {
+pub struct NewSettlementManager {
 	pg_pool: PgPool,
 }
 
-impl NewCas {
+impl NewSettlementManager {
 	pub fn new(pg_pool: PgPool) -> Self {
 		Self { pg_pool }
 	}
@@ -24,13 +24,14 @@ impl NewCas {
 
 
 #[tonic::async_trait]
-impl SettlementCrud for NewCas {
+impl SettlementCrud for NewSettlementManager {
 	async fn create(
 		&self,
 		request: Request<SettlementCreate>,
 	) -> Result<Response<Settlement>, Status> {
 		let req: SettlementCreate = request.into_inner();
 
+		log::info!("Creating a new settlement for service_id {}", req.service_id);
 
 		let insert_settlement_query = sqlx::query_as!(
 			model::settlement_manager::DbSettlement,
@@ -43,10 +44,13 @@ impl SettlementCrud for NewCas {
 
 
 		if insert_settlement_query.is_err() {
+			log::error!("Can't insert record into settlement table because query failed.", );
 			Status::internal("Can't insert record into settlement table because query failed.");
 		}
 
 		let db_settlement = insert_settlement_query.unwrap();
+
+		log::info!("Created a new settlement (id: {}) for service_id {}", db_settlement.id, db_settlement.service_id);
 
 		let settlement = Settlement {
 			id: db_settlement.id,
@@ -68,6 +72,8 @@ impl SettlementCrud for NewCas {
 
 		let req = request.into_inner();
 
+		log::info!("Getting settlement by id {}", req.id);
+
 		let get_settlement_query = sqlx::query_as!(
 			model::settlement_manager::DbSettlement,
 			"SELECT * FROM settlements WHERE id=($1);",
@@ -79,6 +85,8 @@ impl SettlementCrud for NewCas {
 		}
 
 		let db_settlement = get_settlement_query.unwrap();
+
+		log::info!("Settlement {} found", db_settlement.id);
 
 		let settlement = Settlement{
 			id: db_settlement.id,

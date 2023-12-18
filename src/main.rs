@@ -3,6 +3,8 @@ use tonic::{transport::Server};
 use dotenv::dotenv;
 use settlement_manager::settlement_crud_server::SettlementCrudServer;
 
+use log;
+
 mod conf;
 mod handler;
 mod model;
@@ -24,6 +26,9 @@ fn get_conn_string(conf: conf::Conf) -> String {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+
+    env_logger::builder().filter_level(log::LevelFilter::Info).init();
+
     dotenv().ok();
     let conf = conf::load_env();
 
@@ -40,14 +45,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     let addr = "[::1]:50051".parse().unwrap();
-    let cas= handler::settlement_manager::NewCas::new(pg_pool);
+    let settlement_manager = handler::settlement_manager::NewSettlementManager::new(pg_pool);
+
+    log::info!("Server started {}! Running on {}", "\u{1F680}",addr);
 
     Server::builder()
-        .add_service(SettlementCrudServer::new(cas))
+        .add_service(SettlementCrudServer::new(settlement_manager))
         .serve(addr)
         .await?;
-
-    println!("Server started! Running on port: 50051");
 
     Ok(())
 }
