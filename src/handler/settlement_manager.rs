@@ -1,15 +1,10 @@
-use crate::settlement_manager::settlement_crud_server::{SettlementCrud};
-use crate::settlement_manager::{Settlement, SettlementCreate, SettlementGet};
+use protos::settlement_manager::settlement_crud_server::{SettlementCrud};
+use protos::settlement_manager::{Settlement, SettlementCreate, SettlementGet};
 use sqlx::postgres::{PgPool};
 use tonic::{Request, Response, Status};
 use uuid::Uuid;
 use crate::model;
 use crate::utils::{native_dt_to_timestamp};
-
-pub mod settlement_manager {
-	tonic::include_proto!("settlement_manager");
-}
-
 
 #[derive(Debug)]
 pub struct NewSettlementManager {

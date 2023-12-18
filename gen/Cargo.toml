@@ -1,7 +1,5 @@
-# gen/Cargo.toml
-
 [package]
-name = "proto"
+name = "protos"
 version = "0.1.0"
 edition = "2021"
 

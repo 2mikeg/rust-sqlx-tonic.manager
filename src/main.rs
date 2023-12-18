@@ -1,9 +1,10 @@
 use sqlx::postgres::{PgPoolOptions};
 use tonic::{transport::Server};
 use dotenv::dotenv;
-use settlement_manager::settlement_crud_server::SettlementCrudServer;
+use protos::settlement_manager::settlement_crud_server::SettlementCrudServer;
 
 use log;
+
 
 mod conf;
 mod handler;
@@ -11,9 +12,6 @@ mod model;
 mod utils;
 mod tests;
 
-pub mod settlement_manager {
-    tonic::include_proto!("settlement_manager");
-}
 
 
 fn get_conn_string(conf: conf::Conf) -> String {

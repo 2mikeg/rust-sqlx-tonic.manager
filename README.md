@@ -20,8 +20,16 @@ cargo build
 cargo run
 ```
 
+## Proto generate
+```bash
+cargo install protoc-gen-prost protoc-gen-prost-serde protoc-gen-tonic protoc-gen-prost-crate
+```
+
 ## License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 ## Acknowledgements
 A special thanks to ChatGPT for creating this README.md
+
+👀
+https://dev.to/martinp/roll-your-own-auth-with-rust-and-protobuf-3f78

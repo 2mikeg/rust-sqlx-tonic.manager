@@ -16,6 +16,13 @@ prost-types = "0.12.3"
 chrono = { version = "0.4.31"}
 log = "0.4"
 env_logger = "0.10"
+pbjson-types = "0.6.0"
+protos = { path = "./gen" }
 
 [build-dependencies]
 tonic-build = "0.10.2"
+
+[workspace]
+members = [
+    "gen"
+]
