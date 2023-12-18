@@ -9,6 +9,7 @@ mod conf;
 mod handler;
 mod model;
 mod utils;
+mod tests;
 
 pub mod settlement_manager {
     tonic::include_proto!("settlement_manager");
